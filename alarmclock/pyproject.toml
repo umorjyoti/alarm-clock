@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "alarmclock"
+version = "0.1.0"
+description = "Python alarm clock library with optional CLI"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Alarmclock Contributors" }]
+keywords = ["alarm", "cli", "scheduler", "reminder"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "tzdata>=2024.1; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+cli = ["typer>=0.12", "rich>=13.0"]
+dev = ["pytest>=8.0", "pytest-cov>=4.0"]
+all = ["alarmclock[cli,dev]"]
+
+[project.scripts]
+alarm = "alarmclock.cli.main:main"
+
+[project.urls]
+Documentation = "https://github.com/example/alarmclock#readme"
+Repository = "https://github.com/example/alarmclock"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/alarmclock"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/alarmclock/_sounds" = "alarmclock/_sounds"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
